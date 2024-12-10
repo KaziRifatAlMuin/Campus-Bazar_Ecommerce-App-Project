@@ -13,25 +13,34 @@
         android:theme="@style/Theme.CampusBazar"
         tools:targetApi="31">
 
+        <!-- Metadata example (updated for clarity) -->
+        <meta-data
+            android:name="com.google.android.actions"
+            android:resource="@xml/data_extraction_rules" />
+
+        <!-- Main Activity (Get Started Page) -->
         <activity
-            android:name=".RegistrationActivity"
-            android:exported="true">
+            android:name=".MainActivity"
+            android:exported="true"
+            android:label="@string/app_name"
+            android:theme="@style/Theme.CampusBazar.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
 
+        <!-- Registration Activity -->
+        <activity
+            android:name=".RegistrationActivity"
+            android:exported="true"
+            android:label="Sign Up" />
+
+        <!-- Login Activity -->
         <activity
             android:name=".LoginActivity"
-            android:exported="false" />
-
-        <activity
-            android:name=".MainActivity"
             android:exported="true"
-            android:label="@string/app_name"
-            android:theme="@style/Theme.CampusBazar.NoActionBar">
-        </activity>
+            android:label="Sign In" />
 
     </application>
 

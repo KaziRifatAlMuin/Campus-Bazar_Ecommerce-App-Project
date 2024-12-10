@@ -1,11 +1,10 @@
 package com.rifat.campusbazar;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.graphics.Insets;
-import androidx.core.view.ViewCompat;
-import androidx.core.view.WindowInsetsCompat;
 
 public class LoginActivity extends AppCompatActivity {
 
@@ -14,10 +13,22 @@ public class LoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
-        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
-            Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
-            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
-            return insets;
+        // Handle "Sign Up" text click
+        TextView signUpText = findViewById(R.id.sign_up);
+        signUpText.setOnClickListener(view -> {
+            // Navigate to RegistrationActivity
+            Intent intent = new Intent(LoginActivity.this, RegistrationActivity.class);
+            startActivity(intent);
+            finish();
+        });
+
+        // Handle "Sign In" button click
+        findViewById(R.id.signin_btn).setOnClickListener(view -> {
+            // Logic for signing in the user
+            // Example: Navigate to DashboardActivity
+            // Intent intent = new Intent(LoginActivity.this, DashboardActivity.class);
+            // startActivity(intent);
+            // finish();
         });
     }
 }
