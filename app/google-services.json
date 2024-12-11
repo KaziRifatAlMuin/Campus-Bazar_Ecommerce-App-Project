@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "625986657942",
+    "project_id": "campusbazar-1f6ca",
+    "storage_bucket": "campusbazar-1f6ca.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:625986657942:android:1ddf7509afa5a065fb2cb7",
+        "android_client_info": {
+          "package_name": "com.rifat.campusbazar"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDnMXGLhdj1HILdWs3t9kBm4E_-EGJQeZM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
