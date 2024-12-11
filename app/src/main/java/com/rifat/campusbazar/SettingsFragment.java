@@ -1,4 +1,4 @@
-package com.rifat.campusbazar.ui.settings;
+package com.rifat.campusbazar;
 
 import android.os.Bundle;
 import androidx.fragment.app.Fragment;

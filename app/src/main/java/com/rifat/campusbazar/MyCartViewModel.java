@@ -1,4 +1,4 @@
-package com.rifat.campusbazar.ui.mycart;
+package com.rifat.campusbazar;
 
 import androidx.lifecycle.ViewModel;
 

@@ -20,14 +20,6 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.rifat.campusbazar.ui.category.CategoryFragment;
-import com.rifat.campusbazar.ui.offers.OffersFragment;
-import com.rifat.campusbazar.ui.shop.ShopFragment;
-import com.rifat.campusbazar.ui.newproducts.NewProductsFragment;
-import com.rifat.campusbazar.ui.myorders.MyOrdersFragment;
-import com.rifat.campusbazar.ui.mycart.MyCartFragment;
-import com.rifat.campusbazar.ui.settings.SettingsFragment;
-import com.rifat.campusbazar.ui.profile.ProfileFragment;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -103,56 +95,56 @@ public class HomeActivity extends AppCompatActivity {
         }
     }
 
+    private void updateToolbarTitle(String title) {
+        if (getSupportActionBar() != null) {
+            getSupportActionBar().setTitle(title);
+        }
+    }
+
     private boolean handleNavigationItemClick(@NonNull MenuItem item) {
         int id = item.getItemId();
 
-        // Keep the if-else structure as requested
         if (id == R.id.nav_home) {
             Toast.makeText(this, "Home Selected", Toast.LENGTH_SHORT).show();
-            // When Home is selected, show the main view and hide fragment container
             showMainContent();
+            updateToolbarTitle("Home");
         } else if (id == R.id.nav_shop) {
             Toast.makeText(this, "Shop Selected", Toast.LENGTH_SHORT).show();
-            // Load Shop Fragment
-            loadFragment(new ShopFragment());
+            loadFragment(new ShopFragment(), "Shop");
         } else if (id == R.id.nav_category) {
             Toast.makeText(this, "Category Selected", Toast.LENGTH_SHORT).show();
-            // Load Category Fragment
-            loadFragment(new CategoryFragment());
+            loadFragment(new CategoryFragment(), "Category");
         } else if (id == R.id.nav_offers) {
             Toast.makeText(this, "Offers Selected", Toast.LENGTH_SHORT).show();
-            // Load Offers Fragment
-            loadFragment(new OffersFragment());
+            loadFragment(new OffersFragment(), "Offers");
         } else if (id == R.id.nav_new_products) {
             Toast.makeText(this, "New Products Selected", Toast.LENGTH_SHORT).show();
-            // Load New Products Fragment
-            loadFragment(new NewProductsFragment());
+            loadFragment(new NewProductsFragment(), "New Products");
         } else if (id == R.id.nav_my_orders) {
             Toast.makeText(this, "My Orders Selected", Toast.LENGTH_SHORT).show();
-            // Load My Orders Fragment
-            loadFragment(new MyOrdersFragment());
+            loadFragment(new MyOrdersFragment(), "My Orders");
         } else if (id == R.id.nav_my_cart) {
             Toast.makeText(this, "My Cart Selected", Toast.LENGTH_SHORT).show();
-            // Load My Cart Fragment
-            loadFragment(new MyCartFragment());
+            loadFragment(new MyCartFragment(), "My Cart");
         } else if (id == R.id.nav_settings) {
             Toast.makeText(this, "Settings Selected", Toast.LENGTH_SHORT).show();
-            // Load Settings Fragment
-            loadFragment(new SettingsFragment());
+            loadFragment(new SettingsFragment(), "Settings");
         } else if (id == R.id.nav_profile) {
             Toast.makeText(this, "Profile Selected", Toast.LENGTH_SHORT).show();
-            // Load Profile Fragment
-            loadFragment(new ProfileFragment());
+            loadFragment(new ProfileFragment(), "Profile");
         } else {
             Toast.makeText(this, "Unknown Option Selected", Toast.LENGTH_SHORT).show();
-            // If unknown, just close drawer
         }
 
-        drawerLayout.closeDrawer(GravityCompat.START); // Close the drawer after item selection
+        drawerLayout.closeDrawer(GravityCompat.START);
         return true;
     }
 
-    private void loadFragment(Fragment fragment) {
+
+    private void loadFragment(Fragment fragment, String title) {
+        // Update Toolbar title
+        updateToolbarTitle(title);
+
         // Hide main content and show fragment container
         hideMainContent();
         FragmentManager fragmentManager = getSupportFragmentManager();
@@ -160,6 +152,7 @@ public class HomeActivity extends AppCompatActivity {
                 .replace(R.id.fragment_container, fragment)
                 .commit();
     }
+
 
     private void hideMainContent() {
         // Hide the main views

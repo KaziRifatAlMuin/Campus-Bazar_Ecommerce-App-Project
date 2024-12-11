@@ -1,4 +1,4 @@
-package com.rifat.campusbazar.ui.offers;
+package com.rifat.campusbazar;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;

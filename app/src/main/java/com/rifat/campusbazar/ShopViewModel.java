@@ -1,4 +1,4 @@
-package com.rifat.campusbazar.ui.shop;
+package com.rifat.campusbazar;
 
 import androidx.lifecycle.ViewModel;
 
