@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
+
     <!-- Permission to access the Internet -->
     <uses-permission android:name="android.permission.INTERNET" />
 
@@ -14,10 +15,10 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.AppCompat.Light.DarkActionBar"
         tools:targetApi="31">
-        <activity
-            android:name=".HomeActivity"
-            android:exported="false" />
-        <!-- Firebase Initialization -->
+        <meta-data
+            android:name="com.google.android.actions"
+            android:resource="@xml/nav_item_color_state" />
+        <!-- Firebase Initialization Metadata -->
         <meta-data
             android:name="com.google.firebase.messaging.default_notification_icon"
             android:resource="@drawable/ic_notification" />
@@ -47,8 +48,12 @@
             android:name=".LoginActivity"
             android:exported="true"
             android:label="Sign In"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar" /> <!-- Home Activity -->
+        <activity
+            android:name=".HomeActivity"
+            android:exported="true"
+            android:label="Home"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
-
     </application>
 
 </manifest>
