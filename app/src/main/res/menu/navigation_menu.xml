@@ -19,10 +19,6 @@
             android:icon="@drawable/ic_offer"
             android:title="Offers" />
         <item
-            android:id="@+id/nav_new_products"
-            android:icon="@drawable/ic_new"
-            android:title="New Products" />
-        <item
             android:id="@+id/nav_my_orders"
             android:icon="@drawable/ic_order"
             android:title="My Orders" />

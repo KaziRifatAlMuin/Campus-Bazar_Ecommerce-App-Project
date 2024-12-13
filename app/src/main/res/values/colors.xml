@@ -9,4 +9,12 @@
     <color name="white">#FFFFFFFF</color>
     <color name="holo_purple">#6200EE</color>
     <color name="nav_item_selected_color">#BB86FC</color>
+    <color name="gray">#808080</color>
+
+    <color name="category_tech">#8B8000</color>
+    <color name="category_books">#8A2BE2</color>
+    <color name="category_equipments">#FF6347</color>
+    <color name="category_clothes">#4682B4</color>
+    <color name="category_others">#32CD32</color>
+
 </resources>

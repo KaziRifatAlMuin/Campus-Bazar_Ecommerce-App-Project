@@ -3,23 +3,19 @@ package com.rifat.campusbazar;
 public class Product {
     private String name;
     private String price;
-    private int image;
+    private int imageResId;
+    private String category;
 
-    public Product(String name, String price, int image) {
+    public Product(String name, String price, int imageResId, String category) {
         this.name = name;
         this.price = price;
-        this.image = image;
+        this.imageResId = imageResId;
+        this.category = category;
     }
 
-    public String getName() {
-        return name;
-    }
-
-    public String getPrice() {
-        return price;
-    }
-
-    public int getImage() {
-        return image;
-    }
+    // Getters
+    public String getName() { return name; }
+    public String getPrice() { return price; }
+    public int getImageResId() { return imageResId; }
+    public String getCategory() { return category; }
 }
