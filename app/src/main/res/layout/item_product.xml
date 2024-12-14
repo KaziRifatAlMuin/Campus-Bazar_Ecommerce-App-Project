@@ -44,7 +44,6 @@
             android:layout_height="wrap_content"
             android:text="Category"
             android:textSize="12sp"
-            android:textColor="@color/gray" />
-
+            android:textColor="@android:color/darker_gray" />
     </LinearLayout>
 </androidx.cardview.widget.CardView>

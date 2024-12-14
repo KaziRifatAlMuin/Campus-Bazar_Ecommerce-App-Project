@@ -20,7 +20,7 @@ public class MainActivity extends AppCompatActivity {
 
         // "Get Started" button click listener
         binding.startButton.setOnClickListener(view -> {
-            Intent intent = new Intent(MainActivity.this, RegistrationActivity.class);
+            Intent intent = new Intent(MainActivity.this,LoginActivity.class);
             startActivity(intent);
             finish();
         });

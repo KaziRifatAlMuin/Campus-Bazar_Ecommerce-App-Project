@@ -10,6 +10,9 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
+import com.rifat.campusbazar.R;
+
 import java.util.List;
 
 public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductViewHolder> {
@@ -32,11 +35,26 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductV
     @Override
     public void onBindViewHolder(@NonNull ProductViewHolder holder, int position) {
         Product product = productList.get(position);
-        holder.productImage.setImageResource(product.getImageResId());
         holder.productName.setText(product.getName());
         holder.productPrice.setText(product.getPrice());
         holder.productCategory.setText(product.getCategory());
+
+        // Decide which to load: URL or local resource
+        if (product.getImageUrl() != null && !product.getImageUrl().isEmpty()) {
+            // Load from URL
+            Glide.with(context)
+                    .load(product.getImageUrl())
+                    .placeholder(R.drawable.placeholder_image)
+                    .into(holder.productImage);
+        } else {
+            // Load from local resource
+            Glide.with(context)
+                    .load(product.getImageResId())
+                    .placeholder(R.drawable.placeholder_image)
+                    .into(holder.productImage);
+        }
     }
+
 
     @Override
     public int getItemCount() {
@@ -50,7 +68,7 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductV
         ProductViewHolder(@NonNull View itemView) {
             super(itemView);
             productImage = itemView.findViewById(R.id.productImage);
-            productName  = itemView.findViewById(R.id.productName);
+            productName = itemView.findViewById(R.id.productName);
             productPrice = itemView.findViewById(R.id.productPrice);
             productCategory = itemView.findViewById(R.id.productCategory);
         }

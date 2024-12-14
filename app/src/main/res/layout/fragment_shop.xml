@@ -6,11 +6,25 @@
     android:background="#FFFFFF"
     android:padding="16dp">
 
-    <TextView
-        android:id="@+id/shop_fragment_text"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="This is Shop Fragment"
-        android:textSize="18sp"
-        android:textColor="@android:color/black" />
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <Button
+            android:id="@+id/btnShowAllProducts"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Show all products"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginBottom="16dp"/>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recyclerViewProducts"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:nestedScrollingEnabled="true"/>
+
+    </LinearLayout>
+
 </FrameLayout>
