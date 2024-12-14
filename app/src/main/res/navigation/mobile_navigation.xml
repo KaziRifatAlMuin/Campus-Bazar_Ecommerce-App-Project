@@ -5,67 +5,62 @@
     android:id="@+id/mobile_navigation"
     app:startDestination="@+id/nav_home">
 
-    <!-- Home Fragment -->
     <fragment
         android:id="@+id/nav_home"
-        android:name="com.rifat.campusbazar.ui.home.HomeFragment"
+        android:name="com.rifat.campusbazar.HomeFragment"
         android:label="@string/menu_home"
         tools:layout="@layout/fragment_home" />
 
-    <!-- Shop Fragment -->
     <fragment
         android:id="@+id/nav_shop"
-        android:name="com.rifat.campusbazar.ui.shop.ShopFragment"
+        android:name="com.rifat.campusbazar.ShopFragment"
         android:label="@string/menu_shop"
         tools:layout="@layout/fragment_shop" />
 
-    <!-- Category Fragment -->
     <fragment
         android:id="@+id/nav_category"
-        android:name="com.rifat.campusbazar.ui.category.CategoryFragment"
+        android:name="com.rifat.campusbazar.CategoryFragment"
         android:label="@string/menu_category"
         tools:layout="@layout/fragment_category" />
 
-    <!-- Offers Fragment -->
     <fragment
         android:id="@+id/nav_offers"
-        android:name="com.rifat.campusbazar.ui.offers.OffersFragment"
+        android:name="com.rifat.campusbazar.OffersFragment"
         android:label="@string/menu_offers"
         tools:layout="@layout/fragment_offers" />
 
-    <!-- New Products Fragment -->
-    <fragment
-        android:id="@+id/nav_new_products"
-        android:name="com.rifat.campusbazar.ui.newproducts.NewProductsFragment"
-        android:label="@string/menu_new_products"
-        tools:layout="@layout/fragment_new_products" />
-
-    <!-- My Orders Fragment -->
     <fragment
         android:id="@+id/nav_my_orders"
-        android:name="com.rifat.campusbazar.ui.orders.MyOrdersFragment"
+        android:name="com.rifat.campusbazar.MyOrdersFragment"
         android:label="@string/menu_my_orders"
         tools:layout="@layout/fragment_my_orders" />
 
-    <!-- My Cart Fragment -->
     <fragment
         android:id="@+id/nav_my_cart"
-        android:name="com.rifat.campusbazar.ui.cart.MyCartFragment"
+        android:name="com.rifat.campusbazar.MyCartFragment"
         android:label="@string/menu_my_cart"
         tools:layout="@layout/fragment_my_cart" />
 
-    <!-- Settings Fragment -->
     <fragment
         android:id="@+id/nav_settings"
-        android:name="com.rifat.campusbazar.ui.settings.SettingsFragment"
+        android:name="com.rifat.campusbazar.SettingsFragment"
         android:label="@string/menu_settings"
         tools:layout="@layout/fragment_settings" />
 
-    <!-- Profile Fragment -->
     <fragment
-        android:id="@+id/nav_profile"
-        android:name="com.rifat.campusbazar.ui.profile.ProfileFragment"
-        android:label="@string/menu_profile"
-        tools:layout="@layout/fragment_profile" />
+        android:id="@+id/profileFragment"
+        android:name="com.rifat.campusbazar.ProfileFragment"
+        android:label="Profile"
+        tools:layout="@layout/fragment_profile">
+        <action
+            android:id="@+id/action_profileFragment_to_profileEditFragment"
+            app:destination="@id/profileEditFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/profileEditFragment"
+        android:name="com.rifat.campusbazar.ProfileEditFragment"
+        android:label="Edit Profile"
+        tools:layout="@layout/fragment_profile_edit" />
 
 </navigation>

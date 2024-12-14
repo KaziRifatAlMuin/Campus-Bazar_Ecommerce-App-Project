@@ -54,8 +54,8 @@ public class HomeFragment extends Fragment {
     // Dummy data for slider images
     private List<Integer> getSliderImages() {
         List<Integer> sliderImages = new ArrayList<>();
-        sliderImages.add(R.drawable.slider1);
         sliderImages.add(R.drawable.slider2);
+        sliderImages.add(R.drawable.slider1);
         sliderImages.add(R.drawable.slider3);
         sliderImages.add(R.drawable.slider4);
         return sliderImages;

@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="16dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <!-- Email is key, show but don't edit -->
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Email (not editable):"
+            android:textStyle="bold"
+            android:layout_marginTop="16dp"/>
+
+        <TextView
+            android:id="@+id/edit_tv_email"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <!-- Editable fields -->
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Name:"
+            android:textStyle="bold"
+            android:layout_marginTop="16dp"/>
+        <EditText
+            android:id="@+id/edit_et_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Name"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Mobile:"
+            android:textStyle="bold"
+            android:layout_marginTop="16dp"/>
+        <EditText
+            android:id="@+id/edit_et_mobile"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Mobile No"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="University:"
+            android:textStyle="bold"
+            android:layout_marginTop="16dp"/>
+        <EditText
+            android:id="@+id/edit_et_university"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="University"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Hall Name:"
+            android:textStyle="bold"
+            android:layout_marginTop="16dp"/>
+        <EditText
+            android:id="@+id/edit_et_hall_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Hall Name"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Address:"
+            android:textStyle="bold"
+            android:layout_marginTop="16dp"/>
+        <EditText
+            android:id="@+id/edit_et_address"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Address"/>
+
+        <Button
+            android:id="@+id/save_profile_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Save"
+            android:layout_marginTop="24dp"/>
+
+    </LinearLayout>
+</ScrollView>

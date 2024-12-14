@@ -8,8 +8,9 @@ import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -19,6 +20,8 @@ public class HomeActivity extends AppCompatActivity {
 
     private DrawerLayout drawerLayout;
     private NavigationView navigationView;
+    private ProfileViewModel profileViewModel;
+    private TextView userName, userEmail;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,31 +42,36 @@ public class HomeActivity extends AppCompatActivity {
         drawerLayout.addDrawerListener(toggle);
         toggle.syncState();
 
-        // Set user details in nav header
-        setNavigationHeader(navigationView);
+        // Find header views
+        userName = navigationView.getHeaderView(0).findViewById(R.id.userName);
+        userEmail = navigationView.getHeaderView(0).findViewById(R.id.userEmail);
 
+        // Initialize ViewModel
+        profileViewModel = new ViewModelProvider(this).get(ProfileViewModel.class);
+
+        // Initialize user email (for ProfileViewModel)
+        FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
+        String currentUserEmail = (currentUser != null && currentUser.getEmail() != null) ? currentUser.getEmail() : "user@example.com";
+        profileViewModel.init(currentUserEmail);
+
+        // Observe ProfileInfo changes
+        profileViewModel.getProfileInfo().observe(this, new Observer<ProfileInfo>() {
+            @Override
+            public void onChanged(ProfileInfo profileInfo) {
+                if (profileInfo != null) {
+                    // Update navigation header name and email from ProfileInfo
+                    userName.setText(profileInfo.getName() != null ? profileInfo.getName() : "User Name");
+                    userEmail.setText(profileInfo.getEmail() != null ? profileInfo.getEmail() : "user@example.com");
+                }
+            }
+        });
+
+        // Set NavigationItemSelectedListener
         navigationView.setNavigationItemSelectedListener(this::handleNavigationItemClick);
 
-        // Load HomeFragment by default
-        loadFragment(new HomeFragment(), "Home");
-    }
-
-    private void setNavigationHeader(NavigationView navigationView) {
-        try {
-            TextView userName = navigationView.getHeaderView(0).findViewById(R.id.userName);
-            TextView userEmail = navigationView.getHeaderView(0).findViewById(R.id.userEmail);
-
-            FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
-
-            if (currentUser != null) {
-                userName.setText(currentUser.getDisplayName() != null ? currentUser.getDisplayName() : "User Name");
-                userEmail.setText(currentUser.getEmail() != null ? currentUser.getEmail() : "user@example.com");
-            } else {
-                userName.setText("Guest");
-                userEmail.setText("guest@example.com");
-            }
-        } catch (Exception e) {
-            Toast.makeText(this, "Failed to load user details: " + e.getMessage(), Toast.LENGTH_SHORT).show();
+        // Load HomeFragment by default if there's no saved state
+        if (savedInstanceState == null) {
+            loadFragment(new HomeFragment(), "Home");
         }
     }
 
@@ -74,34 +82,38 @@ public class HomeActivity extends AppCompatActivity {
     }
 
     private boolean handleNavigationItemClick(@NonNull MenuItem item) {
-        int id = item.getItemId();
+        Fragment selectedFragment = null;
+        String title = "";
 
+        int id = item.getItemId();
         if (id == R.id.nav_home) {
-            Toast.makeText(this, "Home Selected", Toast.LENGTH_SHORT).show();
-            loadFragment(new HomeFragment(), "Home");
+            selectedFragment = new HomeFragment();
+            title = "Home";
         } else if (id == R.id.nav_shop) {
-            Toast.makeText(this, "Shop Selected", Toast.LENGTH_SHORT).show();
-            loadFragment(new ShopFragment(), "Shop");
+            selectedFragment = new ShopFragment();
+            title = "Shop";
         } else if (id == R.id.nav_category) {
-            Toast.makeText(this, "Category Selected", Toast.LENGTH_SHORT).show();
-            loadFragment(new CategoryFragment(), "Category");
+            selectedFragment = new CategoryFragment();
+            title = "Category";
         } else if (id == R.id.nav_offers) {
-            Toast.makeText(this, "Offers Selected", Toast.LENGTH_SHORT).show();
-            loadFragment(new OffersFragment(), "Offers");
+            selectedFragment = new OffersFragment();
+            title = "Offers";
         } else if (id == R.id.nav_my_orders) {
-            Toast.makeText(this, "My Orders Selected", Toast.LENGTH_SHORT).show();
-            loadFragment(new MyOrdersFragment(), "My Orders");
+            selectedFragment = new MyOrdersFragment();
+            title = "My Orders";
         } else if (id == R.id.nav_my_cart) {
-            Toast.makeText(this, "My Cart Selected", Toast.LENGTH_SHORT).show();
-            loadFragment(new MyCartFragment(), "My Cart");
+            selectedFragment = new MyCartFragment();
+            title = "My Cart";
         } else if (id == R.id.nav_profile) {
-            Toast.makeText(this, "Profile Selected", Toast.LENGTH_SHORT).show();
-            loadFragment(new ProfileFragment(), "Profile");
+            selectedFragment = new ProfileFragment();
+            title = "Profile";
         } else if (id == R.id.nav_settings) {
-            Toast.makeText(this, "Settings Selected", Toast.LENGTH_SHORT).show();
-            loadFragment(new SettingsFragment(), "Settings");
-        } else {
-            Toast.makeText(this, "Unknown Option Selected", Toast.LENGTH_SHORT).show();
+            selectedFragment = new SettingsFragment();
+            title = "Settings";
+        }
+
+        if (selectedFragment != null) {
+            loadFragment(selectedFragment, title);
         }
 
         drawerLayout.closeDrawer(GravityCompat.START);
@@ -110,8 +122,8 @@ public class HomeActivity extends AppCompatActivity {
 
     private void loadFragment(Fragment fragment, String title) {
         updateToolbarTitle(title);
-        FragmentManager fragmentManager = getSupportFragmentManager();
-        fragmentManager.beginTransaction()
+        getSupportFragmentManager()
+                .beginTransaction()
                 .replace(R.id.fragment_container, fragment)
                 .commit();
     }
