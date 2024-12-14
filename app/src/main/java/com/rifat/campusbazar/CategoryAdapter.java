@@ -1,18 +1,18 @@
 package com.rifat.campusbazar;
 
 import android.content.Context;
+import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentActivity;
 import androidx.recyclerview.widget.RecyclerView;
-
-import com.rifat.campusbazar.R;
 
 import java.util.List;
 
@@ -20,10 +20,12 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.Catego
 
     private final Context context;
     private final List<Category> categories;
+    private final Fragment parentFragment;
 
-    public CategoryAdapter(Context context, List<Category> categories) {
+    public CategoryAdapter(Context context, List<Category> categories, Fragment parentFragment) {
         this.context = context;
         this.categories = categories;
+        this.parentFragment = parentFragment;
     }
 
     @NonNull
@@ -38,9 +40,22 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.Catego
         Category category = categories.get(position);
         holder.categoryImage.setImageResource(category.getImageResId());
         holder.categoryName.setText(category.getName());
-        holder.viewProductsButton.setOnClickListener(v ->
-                Toast.makeText(context, "View products in " + category.getName(), Toast.LENGTH_SHORT).show()
-        );
+        holder.viewProductsButton.setOnClickListener(v -> {
+            // Create a new instance of ShopFragment
+            ShopFragment shopFragment = new ShopFragment();
+
+            // Pass the category name to the ShopFragment using a Bundle
+            Bundle bundle = new Bundle();
+            bundle.putString("categoryName", category.getName());
+            shopFragment.setArguments(bundle);
+
+            // Replace the current fragment with ShopFragment
+            ((FragmentActivity) context).getSupportFragmentManager()
+                    .beginTransaction()
+                    .replace(parentFragment.getId(), shopFragment)
+                    .addToBackStack(null) // Add this transaction to the back stack
+                    .commit();
+        });
     }
 
     @Override

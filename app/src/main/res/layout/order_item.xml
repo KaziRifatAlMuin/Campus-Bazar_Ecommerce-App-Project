@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="16dp"
+    android:background="@android:color/white"
+    android:layout_marginBottom="8dp">
+
+    <TextView
+        android:id="@+id/orderTimestamp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Order Date and Time"
+        android:textStyle="bold"
+        android:textSize="16sp"/>
+
+    <TextView
+        android:id="@+id/orderTotalPrice"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Total Price: ৳1000"
+        android:textSize="14sp"
+        android:layout_marginTop="8dp"/>
+
+    <TextView
+        android:id="@+id/orderItemsList"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Items: \n- Item 1\n- Item 2"
+        android:textSize="14sp"
+        android:layout_marginTop="8dp"/>
+
+</LinearLayout>

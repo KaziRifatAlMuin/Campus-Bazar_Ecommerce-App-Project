@@ -1,3 +1,4 @@
+// CategoryFragment.java
 package com.rifat.campusbazar;
 
 import android.os.Bundle;
@@ -9,10 +10,6 @@ import android.widget.TextView;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-
-import com.rifat.campusbazar.R;
-import com.rifat.campusbazar.Category;
-import com.rifat.campusbazar.CategoryAdapter;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -32,7 +29,7 @@ public class CategoryFragment extends Fragment {
         // Set up RecyclerView
         categoryRecyclerView = root.findViewById(R.id.categoryRecyclerView);
         categoryRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-        categoryRecyclerView.setAdapter(new CategoryAdapter(getContext(), getCategories()));
+        categoryRecyclerView.setAdapter(new CategoryAdapter(getContext(), getCategories(), this));
 
         return root;
     }

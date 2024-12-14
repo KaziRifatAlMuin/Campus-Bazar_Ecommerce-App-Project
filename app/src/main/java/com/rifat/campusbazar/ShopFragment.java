@@ -5,13 +5,14 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
+import android.widget.Toast;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -25,6 +26,7 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.List;
 
+
 public class ShopFragment extends Fragment {
 
     private static final String DATA_URL = "https://api.myjson.online/v1/records/d0e1684b-daca-4794-8be4-cc27c397bc6a";
@@ -33,6 +35,8 @@ public class ShopFragment extends Fragment {
     private ProductAdapter productAdapter;
     private List<Product> productList;
 
+    private Button viewCartButton;
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
@@ -40,6 +44,7 @@ public class ShopFragment extends Fragment {
         View rootView = inflater.inflate(R.layout.fragment_shop, container, false);
 
         Button btnShowAllProducts = rootView.findViewById(R.id.btnShowAllProducts);
+        viewCartButton = rootView.findViewById(R.id.viewCartButton);
 
         recyclerView = rootView.findViewById(R.id.recyclerViewProducts);
         recyclerView.setLayoutManager(new GridLayoutManager(requireContext(), 2));
@@ -50,6 +55,15 @@ public class ShopFragment extends Fragment {
 
         btnShowAllProducts.setOnClickListener(v -> fetchProductData());
 
+        // Navigate to MyCartFragment on "View Cart" button click
+        viewCartButton.setOnClickListener(v -> {
+            requireActivity().getSupportFragmentManager()
+                    .beginTransaction()
+                    .replace(R.id.fragment_container, new MyCartFragment())
+                    .addToBackStack(null)
+                    .commit();
+        });
+
         return rootView;
     }
 
@@ -59,34 +73,38 @@ public class ShopFragment extends Fragment {
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(
                 Request.Method.GET, DATA_URL, null,
                 response -> {
-                    List<ProductNetwork> networkProducts = parseJsonResponse(response);
-                    updateProductList(networkProducts);
+                    try {
+                        List<ProductNetwork> networkProducts = parseJsonResponse(response);
+                        updateProductList(networkProducts);
+                        Toast.makeText(requireContext(), "Products loaded successfully!", Toast.LENGTH_SHORT).show();
+                    } catch (JSONException e) {
+                        Toast.makeText(requireContext(), "Error parsing product data!", Toast.LENGTH_SHORT).show();
+                    }
                 },
-                Throwable::printStackTrace
+                error -> {
+                    error.printStackTrace();
+                    Toast.makeText(requireContext(), "Failed to load products. Please try again.", Toast.LENGTH_SHORT).show();
+                }
         );
 
         requestQueue.add(jsonObjectRequest);
     }
 
-    private List<ProductNetwork> parseJsonResponse(JSONObject response) {
+    private List<ProductNetwork> parseJsonResponse(JSONObject response) throws JSONException {
         List<ProductNetwork> networkProducts = new ArrayList<>();
-        try {
-            JSONObject dataObject = response.getJSONObject("data");
-            JSONArray productsArray = dataObject.getJSONArray("products");
+        JSONObject dataObject = response.getJSONObject("data");
+        JSONArray productsArray = dataObject.getJSONArray("products");
 
-            for (int i = 0; i < productsArray.length(); i++) {
-                JSONObject productObj = productsArray.getJSONObject(i);
-                String name = productObj.getString("name");
-                String category = productObj.getString("category");
+        for (int i = 0; i < productsArray.length(); i++) {
+            JSONObject productObj = productsArray.getJSONObject(i);
+            String name = productObj.getString("name");
+            String category = productObj.getString("category");
 
-                JSONObject productInfo = productObj.getJSONObject("product_info");
-                String price = productInfo.getString("price");
-                String imageUrl = productInfo.getString("imageurl");
+            JSONObject productInfo = productObj.getJSONObject("product_info");
+            String price = productInfo.getString("price");
+            String imageUrl = productInfo.getString("imageurl");
 
-                networkProducts.add(new ProductNetwork(name, price, imageUrl, category));
-            }
-        } catch (JSONException e) {
-            e.printStackTrace();
+            networkProducts.add(new ProductNetwork(name, price, imageUrl, category));
         }
         return networkProducts;
     }

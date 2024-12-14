@@ -69,4 +69,7 @@ dependencies {
     implementation "com.android.volley:volley-cronet:1.2.1"
     implementation "com.squareup.picasso:picasso:2.8"
 
+    implementation 'com.google.firebase:firebase-firestore:24.7.1'
+
+
 }
