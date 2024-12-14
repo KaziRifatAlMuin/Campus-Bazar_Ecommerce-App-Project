@@ -28,7 +28,7 @@ public class RegistrationActivity extends AppCompatActivity {
         mAuth = FirebaseAuth.getInstance();
 
         // Find views
-        nameEditText = findViewById(R.id.name);
+//        nameEditText = findViewById(R.id.name);
         emailEditText = findViewById(R.id.email_reg);
         passwordEditText = findViewById(R.id.password_reg);
         progressBar = findViewById(R.id.progressBar);
@@ -36,14 +36,14 @@ public class RegistrationActivity extends AppCompatActivity {
 
         // Handle "Sign Up" button click
         findViewById(R.id.login_btn).setOnClickListener(view -> {
-            String name = nameEditText.getText().toString().trim();
+//            String name = nameEditText.getText().toString().trim();
             String email = emailEditText.getText().toString().trim();
             String password = passwordEditText.getText().toString().trim();
 
-            if (TextUtils.isEmpty(name)) {
-                Toast.makeText(this, "Name cannot be empty", Toast.LENGTH_SHORT).show();
-                return;
-            }
+//            if (TextUtils.isEmpty(name)) {
+//                Toast.makeText(this, "Name cannot be empty", Toast.LENGTH_SHORT).show();
+//                return;
+//            }
 
             if (TextUtils.isEmpty(email)) {
                 Toast.makeText(this, "Email cannot be empty", Toast.LENGTH_SHORT).show();
