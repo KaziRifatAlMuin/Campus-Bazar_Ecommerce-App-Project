@@ -5,12 +5,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
-import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.android.volley.Request;
@@ -31,7 +31,7 @@ public class ShopFragment extends Fragment {
 
     private RecyclerView recyclerView;
     private ProductAdapter productAdapter;
-    private List<Product> productList; // Existing Product list
+    private List<Product> productList;
 
     @Nullable
     @Override
@@ -44,8 +44,8 @@ public class ShopFragment extends Fragment {
         recyclerView = rootView.findViewById(R.id.recyclerViewProducts);
         recyclerView.setLayoutManager(new GridLayoutManager(requireContext(), 2));
 
-        productList = new ArrayList<>(); // Initialize the list
-        productAdapter = new ProductAdapter(requireContext(), productList);
+        productList = new ArrayList<>();
+        productAdapter = new ProductAdapter(requireContext(), productList, this::onProductClick);
         recyclerView.setAdapter(productAdapter);
 
         btnShowAllProducts.setOnClickListener(v -> fetchProductData());
@@ -62,9 +62,7 @@ public class ShopFragment extends Fragment {
                     List<ProductNetwork> networkProducts = parseJsonResponse(response);
                     updateProductList(networkProducts);
                 },
-                error -> {
-                    error.printStackTrace();
-                }
+                Throwable::printStackTrace
         );
 
         requestQueue.add(jsonObjectRequest);
@@ -73,10 +71,7 @@ public class ShopFragment extends Fragment {
     private List<ProductNetwork> parseJsonResponse(JSONObject response) {
         List<ProductNetwork> networkProducts = new ArrayList<>();
         try {
-            // Get the "data" object first
             JSONObject dataObject = response.getJSONObject("data");
-
-            // Now get the products array from dataObject
             JSONArray productsArray = dataObject.getJSONArray("products");
 
             for (int i = 0; i < productsArray.length(); i++) {
@@ -96,11 +91,9 @@ public class ShopFragment extends Fragment {
         return networkProducts;
     }
 
-
     private void updateProductList(List<ProductNetwork> networkProducts) {
         productList.clear();
         for (ProductNetwork networkProduct : networkProducts) {
-            // Use the constructor that accepts imageUrl
             productList.add(new Product(
                     networkProduct.getName(),
                     networkProduct.getPrice(),
@@ -111,4 +104,9 @@ public class ShopFragment extends Fragment {
         productAdapter.notifyDataSetChanged();
     }
 
+    private void onProductClick(Product product) {
+        // Add product to cart
+        CartRepository.getInstance().addItemToCart(product);
+        Toast.makeText(requireContext(), product.getName() + " added to cart", Toast.LENGTH_SHORT).show();
+    }
 }

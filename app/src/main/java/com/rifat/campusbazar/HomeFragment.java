@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -21,20 +22,35 @@ public class HomeFragment extends Fragment {
     private ViewPager2 sliderViewPager;
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+    public View onCreateView(@NonNull LayoutInflater inflater,
+                             ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_home, container, false);
 
         // Set up RecyclerView for products
         productsRecyclerView = view.findViewById(R.id.productsRecyclerView);
         productsRecyclerView.setLayoutManager(new GridLayoutManager(getContext(), 2));
-        productsRecyclerView.setAdapter(new ProductAdapter(getContext(), getDummyProductList()));
+
+        // Set adapter with an OnProductClickListener
+        productsRecyclerView.setAdapter(new ProductAdapter(
+                requireContext(),
+                getDummyProductList(),
+                this::onProductClick
+        ));
 
         // Set up ViewPager2 for slider
         sliderViewPager = view.findViewById(R.id.sliderViewPager);
         sliderViewPager.setAdapter(new SliderAdapter(getSliderImages()));
 
         return view;
+    }
+
+    // Handle product clicks
+    private void onProductClick(Product product) {
+        // Add the product to the cart
+        CartRepository.getInstance().addItemToCart(product);
+        // Show a Toast message as feedback
+        Toast.makeText(getContext(), product.getName() + " added to cart", Toast.LENGTH_SHORT).show();
     }
 
     // Dummy data for products

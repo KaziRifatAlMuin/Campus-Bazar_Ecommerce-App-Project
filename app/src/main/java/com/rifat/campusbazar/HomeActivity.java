@@ -1,20 +1,21 @@
 package com.rifat.campusbazar;
 
 import android.os.Bundle;
+import android.view.MenuItem;
 import android.widget.TextView;
-import android.widget.Toast;
+
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
-import androidx.fragment.app.Fragment;
+
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import android.view.MenuItem;
 
 public class HomeActivity extends AppCompatActivity {
 
@@ -59,7 +60,6 @@ public class HomeActivity extends AppCompatActivity {
             @Override
             public void onChanged(ProfileInfo profileInfo) {
                 if (profileInfo != null) {
-                    // Update navigation header name and email from ProfileInfo
                     userName.setText(profileInfo.getName() != null ? profileInfo.getName() : "User Name");
                     userEmail.setText(profileInfo.getEmail() != null ? profileInfo.getEmail() : "user@example.com");
                 }

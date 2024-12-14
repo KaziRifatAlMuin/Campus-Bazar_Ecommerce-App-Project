@@ -7,7 +7,7 @@ public class Product {
     private String category;
     private String imageUrl; // New field
 
-    // Existing constructor
+    // Existing constructor for local resources
     public Product(String name, String price, int imageResId, String category) {
         this.name = name;
         this.price = price;

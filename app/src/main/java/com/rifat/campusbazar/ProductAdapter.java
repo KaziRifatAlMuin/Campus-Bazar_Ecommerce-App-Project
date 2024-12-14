@@ -11,7 +11,6 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
-import com.rifat.campusbazar.R;
 
 import java.util.List;
 
@@ -19,10 +18,17 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductV
 
     private final Context context;
     private final List<Product> productList;
+    private final OnProductClickListener clickListener;
 
-    public ProductAdapter(Context context, List<Product> productList) {
+    // Interface for product click callback
+    public interface OnProductClickListener {
+        void onProductClick(Product product);
+    }
+
+    public ProductAdapter(Context context, List<Product> productList, OnProductClickListener clickListener) {
         this.context = context;
         this.productList = productList;
+        this.clickListener = clickListener;
     }
 
     @NonNull
@@ -37,24 +43,20 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductV
         Product product = productList.get(position);
         holder.productName.setText(product.getName());
         holder.productPrice.setText(product.getPrice());
-        holder.productCategory.setText(product.getCategory());
 
-        // Decide which to load: URL or local resource
-        if (product.getImageUrl() != null && !product.getImageUrl().isEmpty()) {
-            // Load from URL
-            Glide.with(context)
-                    .load(product.getImageUrl())
-                    .placeholder(R.drawable.placeholder_image)
-                    .into(holder.productImage);
-        } else {
-            // Load from local resource
-            Glide.with(context)
-                    .load(product.getImageResId())
-                    .placeholder(R.drawable.placeholder_image)
-                    .into(holder.productImage);
-        }
+        // Load image using Glide
+        Glide.with(context)
+                .load(product.getImageUrl() != null ? product.getImageUrl() : product.getImageResId())
+                .placeholder(R.drawable.placeholder_image)
+                .into(holder.productImage);
+
+        // Set item click listener
+        holder.itemView.setOnClickListener(v -> {
+            if (clickListener != null) {
+                clickListener.onProductClick(product);
+            }
+        });
     }
-
 
     @Override
     public int getItemCount() {
@@ -63,14 +65,13 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductV
 
     static class ProductViewHolder extends RecyclerView.ViewHolder {
         ImageView productImage;
-        TextView productName, productPrice, productCategory;
+        TextView productName, productPrice;
 
         ProductViewHolder(@NonNull View itemView) {
             super(itemView);
             productImage = itemView.findViewById(R.id.productImage);
             productName = itemView.findViewById(R.id.productName);
             productPrice = itemView.findViewById(R.id.productPrice);
-            productCategory = itemView.findViewById(R.id.productCategory);
         }
     }
 }
